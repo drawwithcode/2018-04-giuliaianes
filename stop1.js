@@ -1,13 +1,21 @@
 function preload(){
 }
 
+var cats= [];
 var myCat;
 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
-  myCat = new Cat(50, 100, 100);
+  var catNumber= 5;
+ for (var i=0; i<catNumber; i++) {
+   var myCat = new Cat(random(0, width), random(0, height), 10);
+   myCat.diameter=random(10,50);
+   myCat.speed=random(0.1, 0.8);
+   //myCat.color=color(random(255), random(255), random(255));
+   myCat.color='green';
+   cats.push(myCat);
+ }
 }
 
 function draw() {
@@ -15,19 +23,34 @@ function draw() {
   var myMouseY=mouseY;
   var myMouseBody=50;
   var myMoyseRad=25;
+
   background(200);
-  myCat.move();
-  myCat.display();
+  //cats.move();
+  //cats.display();
   //noLoop();
   fill(255, 140, 200);
   ellipse(myMouseX, myMouseY, myMouseBody);
 
-  var d = dist(myCat.x, myCat.y, myMouseX, myMouseY);
-  if(d<myCat.diameter/2+myMoyseRad) {
-    myCat.color='blue';
-  }else{
-    myCat.color='green';
-  }
+  for (var j=0; j<cats.length; j++) {
+   cats[j].move();
+   cats[j].display();
+   //cats[j].diameter += 1;
+   //cats[j].color=color(random(255), random(255), random(255));
+   var d = dist (cats[j].x, cats[j].y, myMouseX, myMouseY);
+   //console.log('cats.x=' + cats[j].x);
+   if(d<cats[j].diameter/2+25) {
+     cats[j].color='blue';
+      //cats[j] = false;
+      fill('white');
+     textSize(30);
+     text('Click anywhere to restart', width/2 - 170, height/2 + 30);
+     textSize(90);
+     text('OH NO :(', width/2 - 190, height/2 - 30);
+
+   }else{
+     cats[j].color='green';
+   }
+ }
 
 }
 
@@ -165,5 +188,6 @@ this.display = function() {
   fill(this.color);
   ellipse(this.x, this.y, this.diameter);
 }
+
 
 }

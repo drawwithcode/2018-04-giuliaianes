@@ -1,28 +1,66 @@
 function preload(){
 }
 
+var cats= [];
 var myCat;
+var gameover=false;
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
-  myCat = new Cat(50, 100, 100);
+  var catNumber= 5;
+  for (var i=0; i<catNumber; i++) {
+    var myCat = new Cat(random(0, width), random(0, height), 10);
+    myCat.diameter=random(10,50);
+    myCat.speed=random(0.1, 0.8);
+    //myCat.color=color(random(255), random(255), random(255));
+    myCat.color='green';
+    cats.push(myCat);
+  }
 }
 
-function draw() {
-  background(200);
-  myCat.move();
-  myCat.display();
-  //noLoop();
-  fill(255, 140, 200);
-  ellipse(mouseX, mouseY, 50);
+if(!gameover){
+  function draw() {
 
-}
+    var myMouseX=mouseX;
+    var myMouseY=mouseY;
+    var myMouseBody=50;
+    var myMoyseRad=25;
+
+    background(200);
+    //cats.move();
+    //cats.display();
+    //noLoop();
+    fill(255, 140, 200);
+    ellipse(myMouseX, myMouseY, myMouseBody);
+
+    for (var j=0; j<cats.length; j++) {
+      cats[j].move();
+      cats[j].display();
+      //cats[j].diameter += 1;
+      //cats[j].color=color(random(255), random(255), random(255));
+      var d = dist (cats[j].x, cats[j].y, myMouseX, myMouseY);
+      //console.log('cats.x=' + cats[j].x);
+      if(d<cats[j].diameter/2+25) {
+        cats[j].color='blue';
+        gameover=true;
+        fill('white');
+        textSize(30);
+        text('Run away from the evil balls', width/2 - 170, height/2 + 30);
+        textSize(90);
+        text('WATCH OUT', width/2 - 190, height/2 - 30);
+
+      }else{
+        cats[j].color='green';
+      }
+    }
+  }
+}else{gameover=true}
 
 function Cat(bodyX, bodyY, bodyDiameter) {
   this.x = bodyX;
   this.y = bodyY;
-  this. diameter = bodyDiameter;
+  this.diameter = bodyDiameter;
   this.color = 'green';
   this.speed = 0.5;
 
@@ -34,6 +72,7 @@ function Cat(bodyX, bodyY, bodyDiameter) {
     var towardsHyp;
     var towardsX;
     var towardsY;
+    var pippo = 0.1;
 
 
     if(mouseY>this.y){
@@ -48,7 +87,7 @@ function Cat(bodyX, bodyY, bodyDiameter) {
         }
         else {
           if(towardsX !=0){
-            moveX=0.1;
+            moveX=pippo;
           }
         }
 
@@ -57,7 +96,7 @@ function Cat(bodyX, bodyY, bodyDiameter) {
           moveY=(this.speed*towardsHyp)/towardsY;
         }else {
           if(towardsY !=0){
-            moveY=0.1;
+            moveY=pippo;
           }
         }
 
@@ -74,7 +113,7 @@ function Cat(bodyX, bodyY, bodyDiameter) {
           moveX=(this.speed*towardsHyp)/towardsX;
         }else {
           if(towardsX !=0){
-            moveX=0.1;
+            moveX=pippo;
           }
         }
 
@@ -83,7 +122,7 @@ function Cat(bodyX, bodyY, bodyDiameter) {
           moveY=(this.speed*towardsHyp)/towardsY;
         }else {
           if(towardsY !=0){
-            moveY=0.1;
+            moveY=pippo;
           }
         }
 
@@ -103,7 +142,7 @@ function Cat(bodyX, bodyY, bodyDiameter) {
           moveX=(this.speed*towardsHyp)/towardsX;
         }else {
           if(towardsX !=0){
-            moveX=0.1;
+            moveX=pippo;
           }
         }
 
@@ -112,7 +151,7 @@ function Cat(bodyX, bodyY, bodyDiameter) {
           moveY=(this.speed*towardsHyp)/towardsY;
         }else {
           if(towardsY !=0){
-            moveY=0.1;
+            moveY=pippo;
           }
         }
 
@@ -140,17 +179,12 @@ function Cat(bodyX, bodyY, bodyDiameter) {
       }
     }
 
+  }
 
+  this.display = function() {
+    fill(this.color);
+    ellipse(this.x, this.y, this.diameter);
+  }
 
-
-
-
-
-}
-
-this.display = function() {
-  fill(this.color);
-  ellipse(this.x, this.y, this.diameter);
-}
 
 }

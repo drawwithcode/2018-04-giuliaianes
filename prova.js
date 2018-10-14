@@ -140,12 +140,6 @@ function Cat(bodyX, bodyY, bodyDiameter) {
       }
     }
 
-
-
-
-
-
-
 }
 
 this.display = function() {

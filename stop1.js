@@ -3,55 +3,70 @@ function preload(){
 
 var cats= [];
 var myCat;
+var gameover=false;
+var img;
 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  img = loadImage("cat.png");
   var catNumber= 5;
- for (var i=0; i<catNumber; i++) {
-   var myCat = new Cat(random(0, width), random(0, height), 10);
-   myCat.diameter=random(10,50);
-   myCat.speed=random(0.1, 0.8);
-   //myCat.color=color(random(255), random(255), random(255));
-   myCat.color='green';
-   cats.push(myCat);
- }
+  for (var i=0; i<catNumber; i++) {
+    var myCat = new Cat(random(0, width), random(0, height), 10);
+    myCat.diameter=random(10,50);
+    myCat.speed=random(0.1, 0.8);
+    //myCat.color=color(random(255), random(255), random(255));
+    myCat.stroke=noStroke();
+    myCat.color=color(61, 69, 119, 140);
+    cats.push(myCat);
+  }
 }
 
-function draw() {
-  var myMouseX=mouseX;
-  var myMouseY=mouseY;
-  var myMouseBody=50;
-  var myMoyseRad=25;
 
-  background(200);
-  //cats.move();
-  //cats.display();
-  //noLoop();
-  fill(255, 140, 200);
-  ellipse(myMouseX, myMouseY, myMouseBody);
+  function draw() {
+    if(!gameover){
 
-  for (var j=0; j<cats.length; j++) {
-   cats[j].move();
-   cats[j].display();
-   //cats[j].diameter += 1;
-   //cats[j].color=color(random(255), random(255), random(255));
-   var d = dist (cats[j].x, cats[j].y, myMouseX, myMouseY);
-   //console.log('cats.x=' + cats[j].x);
-   if(d<cats[j].diameter/2+25) {
-     cats[j].color='blue';
-      //cats[j] = false;
-      fill('white');
-     textSize(30);
-     text('Click anywhere to restart', width/2 - 170, height/2 + 30);
-     textSize(90);
-     text('OH NO :(', width/2 - 190, height/2 - 30);
+    var myMouseX=mouseX;
+    var myMouseY=mouseY;
+    var myMouseBody=50;
+    var myMoyseRad=25;
 
-   }else{
-     cats[j].color='green';
-   }
- }
+    background(218, 215, 208);
+    fill('white');
+    textSize(15);
+    text('Run away from the evil cats', 65, 80);
+    textSize(30);
+    text('WATCH OUT', 70, 60);
+    //cats.move();
+    //cats.display();
+    //noLoop();
+    fill(246, 242, 93);
+    ellipse(myMouseX, myMouseY, myMouseBody);
 
+    for (var j=0; j<cats.length; j++) {
+      cats[j].move();
+      cats[j].display();
+      cats[j].diameter += 0.05;
+      cats[j].speed += 0.001;
+      //cats[j].color=color(random(255), random(255), random(255));
+      var d = dist (cats[j].x, cats[j].y, myMouseX, myMouseY);
+      //console.log('cats.x=' + cats[j].x);
+      if(d<cats[j].diameter/2+25) {
+        //cats[j].color='blue';
+        fill('white');
+        textSize(30);
+        text('Click to restart', width/2-100, height/2+50);
+        textSize(90);
+        text('GAME OVER', width/2-280, height/2);
+        gameover=true;
+        //mouseClicked();
+      }else{
+        //cats[j].color='green';
+      }
+    }
+  }else{
+    gameover=true;
+  }
 }
 
 function Cat(bodyX, bodyY, bodyDiameter) {
@@ -176,18 +191,19 @@ function Cat(bodyX, bodyY, bodyDiameter) {
       }
     }
 
+  }
 
+  this.display = function() {
+    fill(this.color);
+    //ellipse(this.x, this.y, this.diameter);
+    image(img, this.x, this.y);
+  }
+  this.mousePressed = function() {
 
-
-
+  }
 
 
 }
-
-this.display = function() {
-  fill(this.color);
-  ellipse(this.x, this.y, this.diameter);
-}
-
-
+function mouseClicked() {
+   location.reload()
 }

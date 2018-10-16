@@ -14,48 +14,57 @@ function setup() {
     myCat.diameter=random(10,50);
     myCat.speed=random(0.1, 0.8);
     //myCat.color=color(random(255), random(255), random(255));
-    myCat.color='green';
+    myCat.stroke=noStroke();
+    myCat.color=color(61, 69, 119, 140);
     cats.push(myCat);
   }
 }
 
-if(!gameover){
+
   function draw() {
+    if(!gameover){
 
     var myMouseX=mouseX;
     var myMouseY=mouseY;
     var myMouseBody=50;
     var myMoyseRad=25;
 
-    background(200);
+    background(218, 215, 208);
+    fill('white');
+    textSize(15);
+    text('Run away from the evil balls', 65, 80);
+    textSize(30);
+    text('WATCH OUT', 70, 60);
     //cats.move();
     //cats.display();
     //noLoop();
-    fill(255, 140, 200);
+    fill(246, 242, 93);
     ellipse(myMouseX, myMouseY, myMouseBody);
 
     for (var j=0; j<cats.length; j++) {
       cats[j].move();
       cats[j].display();
-      //cats[j].diameter += 1;
+      cats[j].diameter += 0.05;
+      cats[j].speed += 0.001;
       //cats[j].color=color(random(255), random(255), random(255));
       var d = dist (cats[j].x, cats[j].y, myMouseX, myMouseY);
       //console.log('cats.x=' + cats[j].x);
       if(d<cats[j].diameter/2+25) {
-        cats[j].color='blue';
-        gameover=true;
+        //cats[j].color='blue';
         fill('white');
-        textSize(30);
-        text('Run away from the evil balls', width/2 - 170, height/2 + 30);
+        //textSize(30);
+        //text('Run away from the evil balls', width/2 - 170, height/2 + 30);
         textSize(90);
-        text('WATCH OUT', width/2 - 190, height/2 - 30);
-
+        text('GAME OVER', width/2-250, height/2);
+        gameover=true;
       }else{
-        cats[j].color='green';
+        //cats[j].color='green';
       }
     }
-  }
-}else{gameover=true}
+  }else{
+    gameover=true;
+  cats[j].color='blue';}
+}
 
 function Cat(bodyX, bodyY, bodyDiameter) {
   this.x = bodyX;
@@ -184,6 +193,9 @@ function Cat(bodyX, bodyY, bodyDiameter) {
   this.display = function() {
     fill(this.color);
     ellipse(this.x, this.y, this.diameter);
+  }
+  this.mousePressed = function() {
+
   }
 
 

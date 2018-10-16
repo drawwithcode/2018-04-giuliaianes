@@ -9,7 +9,6 @@ var catWidth=50;
 var catHeight=62;
 var bouncyCatRatio=3;
 
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
   img = loadImage("cat.png");
@@ -34,7 +33,6 @@ function setup() {
     var myMouseY=mouseY;
     var myMouseBody=50;
     var myMoyseRad=25;
-
 
     background(218, 215, 208);
     fill('white');
